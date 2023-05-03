@@ -66,3 +66,20 @@ users = update_in users[:mary].languages, fn languages -> List.delete(languages,
 
 # get_and_update_in/2 that allows us to extract a value and update the data structure at once.
 # There are also put_in/3, update_in/3 and get_and_update_in/3 which allow dynamic access into the data structure
+
+# ENUMS
+# Functions for working with collections such as Lists, Maps, Range
+# Enum.sum([1, 2, 3]) ===> 6 can also be written as Enum.sum(1..3)
+# Enum.map([1, 2, 3], fn x -> x * 2 end) ===> [2, 4, 6]
+
+map = %{"a" => 1, "b" => 2}
+Enum.map(map, fn {k, v} -> {k, v * 2} end)  ====> [{"a", 2}, {"b", 4}] # k,v represents key and value
+
+# Enum at function
+Enum.at([2, 4, 6], 0) ==> 2
+
+Enum.at([2, 4, 6], 2) ==> 6
+
+Enum.at([2, 4, 6], 4) ==> nil
+
+Enum.at([2, 4, 6], 4, :none)  ==> :none # none is passed as a default value
