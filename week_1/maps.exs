@@ -16,6 +16,9 @@ String.split("1  2  3", " ", trim: true)
 # you can read the value of a keyword list using the bracket syntax
 list[:a] ==> 1
 
+# prepend to front of a list
+list = [1, "2", :mass]
+new_list = ["new" | list]   # ["new", 1, "2", :mass]
 
 # MAPS
 # maps are elixir's key-value store, syntax %{}
