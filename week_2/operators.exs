@@ -1,4 +1,6 @@
 # THE PIN OPERATOR
+# In some reasons, I just want to make sure what I have on the left hand side matches with what I have on the right hand side,
+# without any assignment in case I have a variable on the left hand side. In other words, I just want to compare both sides
 # Use the pin operator ^ when you want to pattern match against a variable’s existing value rather than rebinding the variable.
 # We can use the pin operator inside other pattern matches, such as tuples or lists:
 x = 1
@@ -21,3 +23,4 @@ x = 1
 head ==> 1
 # attempting to read _ will throw a CompileError
 
+# In summary: It pins the variable on its value and prevent any assignment to this variable when using pattern matching.

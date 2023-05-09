@@ -4,6 +4,10 @@
 # Pattern matching allows developers to easily destructure data types such as maps, tuples and lists
 # This is seems to be a way of binding multiple variables to values
 
+# it matches the value on the left hand side with the value on the right hand side.
+# if it matches and if the left hand side includes a variable,
+# it assigns the corresponding value from the right hand side to the variable
+
 {a, b, c} = {:hello, "world", 42}
 a ==> :hello
 b ==> "world"
