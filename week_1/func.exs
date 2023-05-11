@@ -53,5 +53,6 @@ IO.puts Math.zero?(1)         #=> false
 # IO.puts Math.zero?(0.0)
 
 fun = &Math.zero?/1
-# the use of &(capture operator) above allows us assigned named functions to variables, same way we do for anonymous functions
+# the use of &(capture operator) above allows us assign named functions to variables, same way we do for anonymous functions
 fun.(0) # true
+

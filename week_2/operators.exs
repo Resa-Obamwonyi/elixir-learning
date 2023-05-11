@@ -24,3 +24,7 @@ head ==> 1
 # attempting to read _ will throw a CompileError
 
 # In summary: It pins the variable on its value and prevent any assignment to this variable when using pattern matching.
+
+# THE PIPE OPERATOR |>  it takes the output from the expression on its left side and passes it as the first argument to the function call on its right side
+# THE UNIX OPERATOR |
+# The CAPTURE OPERATOR & : it is the capture operator in Elixir, it is used to capture and create anonymous functions
