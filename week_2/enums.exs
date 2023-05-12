@@ -22,6 +22,7 @@ Enum.all?([2,4,6,8], &(rem(&1, 2) == 0) )
 #
 
 # STREAMS --> not exactly sure what eager versus lazy means, i think this means it generates results one at a time
+# Primary reason to use this would be memory management
 # An alternative to enums that supports lzay operations
 # Any enumerable that generates elements one by one during enumeration is called a stream e.g Range
 #

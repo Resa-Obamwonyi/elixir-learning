@@ -35,9 +35,10 @@ end
 
 IO.puts(MathReduce.sum_list([1, 2, 3], 0)) #=> 6
 
-# The process of taking a list and reducing it down to one value is known as a reduce algorithm and is central to functional programming
 
 # REDUCE:
+# The process of taking a list and reducing it down to one value is known as a reduce algorithm and is central to functional programming
+
 # What if we instead want to double all of the values in our list?
 
 defmodule MathDouble do
