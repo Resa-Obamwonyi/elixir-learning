@@ -72,3 +72,13 @@ Task.start(function)
 - First, as we already mentioned, processes are thread-safe without any additional concurrency control.
 - Second, it allows the garbage collector to be more efficient: since data is isolated per process, garbage collection is also isolated per process.
 - Receive will block a message to an non existent process, but send will not
+
+- We can register processes in elixir by giving them atom names
+# Agent.start_link(fn -> %{} end, name: :shopping)
+# KV.Bucket.put(:shopping, "milk", 1)
+# KV.Bucket.get(:shopping, "milk") --> 1
+
+- When starting processes during your tests, we should always prefer to use start_supervised!
+- Links are bi-directional. If you link two processes and one of them crashes, the other side will crash too (unless it is trapping exits).
+- A monitor is uni-directional: only the monitoring process will receive notifications about the monitored one.
+- In other words: use links when you want linked crashes, and monitors when you just want to be informed of crashes, exits, and so on.
