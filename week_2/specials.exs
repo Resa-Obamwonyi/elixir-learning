@@ -12,7 +12,7 @@ alias Foo.Bar.Baz is same as alias Foo.Bar.Baz, as: Baz
 
 # require
 - it is used to require a module in order to use its macros
-- what are macros?
+- what are macros? # Macros are compile-time constructs that receive Elixir's AST as input and return Elixir's AST as output
 
 # try block
 - This is used to evaluate an expression or block and handle any exception thrown
