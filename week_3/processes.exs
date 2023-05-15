@@ -1,4 +1,6 @@
 # In elixir, all code run inside processes
+# Where Elixir processes differ from most thread and green thread implementations is that they're isolated
+# They don't share memory with other processes, including the process that spawned them
 # Processes in Elixir are extremely lightweight in terms of memory and CPU (even compared to threads as used in many other programming languages).
 # Because of this, it is not uncommon to have tens or even hundreds of thousands of processes running simultaneously.
 
@@ -65,3 +67,8 @@ Task.start(function)
 # STATE
 # We can write processes that loop infinitely, maintain state, and send and receive messages
 
+# NOTE
+- Process mailboxes are queues, so each message is read from the front, and removed
+- First, as we already mentioned, processes are thread-safe without any additional concurrency control.
+- Second, it allows the garbage collector to be more efficient: since data is isolated per process, garbage collection is also isolated per process.
+- Receive will block a message to an non existent process, but send will not
