@@ -63,6 +63,8 @@ flush()
 # Tasks build on top of the spawn functions to provide better error reports and introspection
 Task.start(function)
 # Instead of spawn/1 and spawn_link/1, we use Task.start/1 and Task.start_link/1 which return {:ok, pid} rather than just the PID
+# Cannot receive custom messages, or names, doesn't have state and it is a very simple process abstraction
+# Can be run on any node and can run tasks. Manages one process at a time
 
 # STATE
 # We can write processes that loop infinitely, maintain state, and send and receive messages
@@ -82,3 +84,6 @@ Task.start(function)
 - Links are bi-directional. If you link two processes and one of them crashes, the other side will crash too (unless it is trapping exits).
 - A monitor is uni-directional: only the monitoring process will receive notifications about the monitored one.
 - In other words: use links when you want linked crashes, and monitors when you just want to be informed of crashes, exits, and so on.
+
+
+# PID - Process Identifier

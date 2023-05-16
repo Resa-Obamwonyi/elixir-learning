@@ -3,8 +3,12 @@
 - Processes and message passing
 - Erlang Term Storage (ETS)
 
-# AGENTS
+# AGENTS NOTES
 # These are simple wrappers around state, if all you want is to keep state, use agents.
+# These are used to manage states
+# Used to store state in memory
+# Similar to GenServers, but cannot receive custom messages
+
 
 # start abn agent with an empty list
 {:ok, agent} = Agent.start_link fn -> [] end
@@ -17,3 +21,10 @@ Agent.stop(agent)
 
 
 # continued with lib and test folders
+
+# QUESTIONS
+1. When to use Agents or Genservers // Which is better?
+2. Are supervisors mandatory for every application?
+
+- if you are only using state, use agent
+- if you want to receive messages and modifiy based on what you receive, use genservers

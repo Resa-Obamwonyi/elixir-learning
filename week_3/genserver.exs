@@ -1,4 +1,5 @@
 # A GenServer is a process that invokes a limited set of functions under specific conditions.
+# short for Generic Server
 
 def put(bucket, key, value) do
   # Here is the client code
@@ -24,6 +25,7 @@ end
 
 
 # NOTES
+# These can be used to send and receive messages as well as store state
 # There are two types of requests you can send to a GenServer: calls and casts.
 # Calls are synchronous and the server must send a response back to such requests. While the server computes the response,
       # the client is waiting.
