@@ -4,6 +4,9 @@
 # Processes in Elixir are extremely lightweight in terms of memory and CPU (even compared to threads as used in many other programming languages).
 # Because of this, it is not uncommon to have tens or even hundreds of thousands of processes running simultaneously.
 
+# lightweight processes solve problems of concurrency and scalability in web services.
+
+
 # to spawn a new process spawn/1
 # takes a function which it will execute in another process.
 spawn(fn -> 1 + 2 end)
@@ -84,6 +87,8 @@ Task.start(function)
 - Links are bi-directional. If you link two processes and one of them crashes, the other side will crash too (unless it is trapping exits).
 - A monitor is uni-directional: only the monitoring process will receive notifications about the monitored one.
 - In other words: use links when you want linked crashes, and monitors when you just want to be informed of crashes, exits, and so on.
-
+- A process has its own memory and it cannot access the memory of others
+- Processes communicate via processes
+- Agents build on top of genservers
 
 # PID - Process Identifier

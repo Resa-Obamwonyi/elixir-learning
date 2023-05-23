@@ -3,6 +3,8 @@
 - The act of supervising a process includes three distinct responsibilities. The first one is to start child processes.
 - Once a child process is running, the supervisor may restart a child process, either because it terminated abnormally or because a certain
     condition was reached.
+- Supervisors are used to build a hierarchical process structure called a supervision tree. Supervision trees provide fault-tolerance and encapsulate how our applications start and shutdown.
+
 - For example, a supervisor may restart all children if any child dies.
 - Finally, a supervisor is also responsible for shutting down the child processes when the system is shutting down
 
