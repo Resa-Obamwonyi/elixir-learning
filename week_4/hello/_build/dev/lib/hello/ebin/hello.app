@@ -17,8 +17,9 @@
                         'Elixir.HelloWeb.HelloController',
                         'Elixir.HelloWeb.HelloHTML','Elixir.HelloWeb.Layouts',
                         'Elixir.HelloWeb.PageController',
-                        'Elixir.HelloWeb.PageHTML','Elixir.HelloWeb.Router',
-                        'Elixir.HelloWeb.Telemetry']},
+                        'Elixir.HelloWeb.PageHTML',
+                        'Elixir.HelloWeb.Plugs.Locale',
+                        'Elixir.HelloWeb.Router','Elixir.HelloWeb.Telemetry']},
               {registered,[]},
               {vsn,"0.1.0"},
               {mod,{'Elixir.Hello.Application',[]}}]}.

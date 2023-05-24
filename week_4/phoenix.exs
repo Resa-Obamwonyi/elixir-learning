@@ -53,4 +53,52 @@
 # Register controller
 # Create view
 
-# PLUG
+# CONTROLLERS
+- These are intermidiary modules with functions calles actions which are invoked from the router in response to http requests.
+- Actions gather all necessary data and perform all necessary steps before invoking the view layer to render a template or return a JSON response
+- Controller action names must match a route defined in the router, but there is a naming convention
+        index - renders a list of all items of the given resource type
+        show - renders an individual item by ID
+        new - renders a form for creating a new item
+        create - receives parameters for one new item and saves it in a data store
+        edit - retrieves an individual item by ID and displays it in a form for editing
+        update - receives parameters for one edited item and saves the item to a data store
+        delete - receives an ID for an item to be deleted and deletes it from a data store
+
+- Each of these actions takes two parameters, which will be provided by Phoenix behind the scenes. The first param is always conn.
+- Conn is a struct which hold information about the request such as the host, path elements, query, port etc
+- The second parameter is params. This is a map which holds any parameters passed along in the HTTP request
+- When we do not need the params, simply calling it as _params will solve the problem
+- We can compose our own rendering responses using the Plug.Conn.send_resp/3 function, e.g send_resp(conn, 201, "created")
+- To be specific about the content type, we can use put_resp_content_type/2 in conjunction with send_resp/3.
+
+def home(conn, _params) do
+  conn
+  |> put_resp_content_type("text/plain")
+  |> send_resp(201, "")
+end
+
+
+- put_flash and clear_flash are used to add and clear pop up flash messages, either as error or info.
+
+# ROUTING
+- Routes match http requests to controller actions.
+- Run mix phx.routes to get a list of all the routes available in yout application
+- If we do not need all given routes, we can be selective using the :only and :except options to filter specific actions e.g
+      resources "/posts", PostController, only: [:index, :show]
+      resources "/comments", CommentController, except: [:delete]
+- using ~p you can write route paths in controllers, tests and templates e.g ~p"/home"
+      <.link href={~p"/comments"}>View Comments</.link>
+      redirect(conn, to: ~p"/comments/#{comment}")
+- Pipelines are a series of plugs that can be attached to specific scopes. Phoenix defines two pipelines by default, :browser and :api
+- Routes can be organized via pipelines e.g using specific pipelines for auth before access is granted to certain endpoints
+- Routes which begin with an http verb name expand to a single clause of the match function
+- Routes declared with "resources" expand to 8 clauses of the match function
+
+
+# CONTEXTS
+- Contexts are dedicated modules that expose and group related functionality, for example the Elixir logger is made of multiple modules,
+    but we never interact with those modules directly.
+    We call the Logger module the context, exactly because it exposes and groups all of the logging functionality
+- Contexts often encapsulate data access and data validation. They often talk to a database or APIs.
+- Overall, think of them as boundaries to decouple and isolate parts of your application
