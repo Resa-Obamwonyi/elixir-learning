@@ -21,6 +21,23 @@ defmodule Hello.Catalog do
     Repo.all(Product)
   end
 
+  def list_last_3_products do
+    Repo.all(from product in Product, limit: 2, order_by: id: :desc)
+
+    # EQUAL but with other syntax below
+
+    Product
+    |> limit(3)
+    |> order_by(id: :desc)
+    |> Repo.all()
+  end
+
+  def list_most_expensive_products() do
+    # example on how to utilize Module to split out queries into separete modules
+    __MODULE__.ListMostExpensiveProducts.query()
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single product.
 
@@ -36,6 +53,21 @@ defmodule Hello.Catalog do
 
   """
   def get_product!(id), do: Repo.get!(Product, id)
+
+
+
+  def get_product_by_product_or_category_name(name) do
+    # example query with multiple conditions
+    # where(Product, [p, category], p.name like ^name or category.name like ^name)
+
+
+    #|> where([p, category], p.name == ^name)
+    # equal `where` calls
+    |> where(name: ^name)
+    |> Repo.one()
+  end
+
+
 
   @doc """
   Creates a product.
