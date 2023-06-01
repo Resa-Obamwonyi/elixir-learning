@@ -6,7 +6,7 @@ defmodule Friends.Person do
     field(:first_name, :string)
     field(:last_name, :string)
     field(:age, :integer)
-    belongs_to(:group, Group)
+    belongs_to(:group, Friends.Group)
   end
 
   def changeset(person, params \\ %{}) do

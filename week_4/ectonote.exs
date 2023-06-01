@@ -198,6 +198,10 @@ Friends.Repo.delete(person)
 The add_error/4 func used here: add_error(changeset, :name, "is not a superhero") allows us customize and add our own error messages
 
 # ECTO ASSOCIATIONS
+# A movie has many characters and a character belongs to a movie
+# The has_many/3 macro doesn’t add anything to the database itself. What it does is use the foreign key on the associated schema, characters,
+# to make a movie’s associated characters available. This is what will allow us to call movie.characters
+
 - Has Many Association
       defmodule Movie do
         use Ecto.Schema
