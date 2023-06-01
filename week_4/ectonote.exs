@@ -1,3 +1,25 @@
+# ABOUT ECTO
+Ecto is the official Elixir project providing a database wrapper and integrated query language.
+With Ecto we are able to create migrations, define schemas, insert and update records, and query them.
+
+- Ecto is split into 4 components
+    - Repo: used to wrap around the datastore and interact with queries
+    - Schema: used to map database tables to Structs (like models???), it allows devs determine the shape of their data
+    - Query: used to communicate with the repo, to return data or set data in the database
+    - Changeset: used to track and validate changes in incoming and outgoing data, Operations on top of schemas are done via changsets so that
+                  Ecto can efficiently track changes (kinda like serializers???)
+
+# Summarily
+    Ecto.Repo - where the data is, the configuration for this must be in the config.exs file
+    Ecto.Schema - what the data is
+    Ecto.Query - how to read the data
+    Ecto.Changeset - how to change the data: Changesets allow developers to filter, cast, and validate changes
+                    before we apply them to the data
+
+- Ecto supports different databases through the use of adapters e.g Ecto.Adapters.Postgres
+- Ecto has Migrations which is a mechanism to create, modify, and destroy database tables and indexes
+
+
 # create a new project with supervision tree
 mix new friends --sup
 
@@ -42,7 +64,13 @@ This new code will tell Ecto to create a new table called people, and add three 
 first_name, last_name and age to that table.
 The types of these fields are string and integer.
 
-# NOTE: The naming convention for tables in Ecto databases is to use a pluralized name.
+
+
+# NOTES:
+- The naming convention for tables in Ecto databases is to use a pluralized name.
+- By defining a schema, Ecto automatically defines a struct with the schema fields:
+
+
 
 # To run migration and create the people table in our database, we will run this command:
 mix ecto.migrate
@@ -151,3 +179,164 @@ Similar to updating, we must first fetch a record from the database and then cal
 # delete a record, and returns a tuple with the first value being :ok or :error depending on the results
 person = Friends.Repo.get(Friends.Person, 1)
 Friends.Repo.delete(person)
+
+
+
+# ECTO CHANGESETS
+- Changesets allow filtering, casting, validation and definition of constraints when manipulating structs.
+- "Internal data" represents data or logic hardcoded into your Elixir code. "External data" means data that comes from the user via forms,
+      APIs, and often need to be normalized, pruned, and validated via Ecto.Changeset
+
+# SOME ECTO CHANGESET VALIDATOR FUNCS
+- cast/3, change/2
+- validate_length, validate_required
+- validate_acceptance/3, validate_change/3 & /4
+- validate_confirmation/3, validate_exclusion/4 & validate_inclusion/4
+- validate_format/4, validate_number/3
+- validate_subset/4
+
+The add_error/4 func used here: add_error(changeset, :name, "is not a superhero") allows us customize and add our own error messages
+
+# ECTO ASSOCIATIONS
+- Has Many Association
+      defmodule Movie do
+        use Ecto.Schema
+
+        schema "movies" do
+          field :title, :string
+          field :release_date, :date
+          has_many :characters, Character
+        end
+      end
+
+
+- Belongs To Association
+      defmodule Character do
+        use Ecto.Schema
+
+        schema "characters" do
+          field :name, :string
+          field :age, :integer
+          belongs_to :movie, Movie
+        end
+      end
+
+
+- Has One Association
+    defmodule Movie do
+      use Ecto.Schema
+
+      schema "movies" do
+        field :title, :string
+        field :release_date, :date
+        has_one :screenplay, Screenplay
+      end
+    end
+
+
+- Belongs To Association for Has One
+    defmodule Screenplay do
+      use Ecto.Schema
+
+      schema "screenplays" do
+        field :lead_writer, :string
+        belongs_to :movie, Movie
+      end
+    end
+
+
+- Many To Many (through a join table)
+    defmodule Movie do
+      use Ecto.Schema
+
+      schema "movies" do
+        field :title, :string
+        field :release_date, :date
+        many_to_many :actors, Actor, join_through: "movies_actors"
+      end
+    end
+
+    defmodule Actor do
+      use Ecto.Schema
+
+      schema "actors" do
+        field :name, :string
+        many_to_many :movies, Movie, join_through: "movies_actors"
+      end
+    end
+
+
+- Many To Many (through a join schema)
+    defmodule User do
+      use Ecto.Schema
+
+      schema "users" do
+        many_to_many :organizations, Organization, join_through: UserOrganization
+      end
+    end
+
+    defmodule Organization do
+      use Ecto.Schema
+
+      schema "organizations" do
+        many_to_many :users, User, join_through: UserOrganization
+      end
+    end
+
+    defmodule UserOrganization do
+      use Ecto.Schema
+
+      @primary_key false
+      schema "users_organizations" do
+        belongs_to :user, User
+        belongs_to :organization, Organization
+        timestamps()
+      end
+    end
+
+
+- Insert a child record to an existing parent
+    # Using internal data
+    Repo.get_by!(Movie, title: "The Shawshank Redemption")
+    |> Ecto.build_assoc(:characters, name: "Red", age: 60)
+    |> Repo.insert()
+
+    # Using external data
+    # Params represent data from a form, API, CLI, etc
+    params = %{"name" => "Red", "age" => 60}
+
+    Repo.get_by!(Movie, title: "The Shawshank Redemption")
+    |> Ecto.build_assoc(:characters)
+    |> cast(params, [:name, :age]) # note the use of cast
+    |> Repo.insert()
+
+
+- Inserting parent and child records together
+    # Using internal data
+    Repo.insert(
+      %Movie{
+        title: "The Shawshank Redemption",
+        release_date: ~D[1994-10-14],
+        characters: [
+          %Character{name: "Andy Dufresne", age: 50},
+          %Character{name: "Red", age: 60}
+        ]
+      }
+    )
+
+    # Using external data
+    # Params represent data from a form, API, CLI, etc
+    params = %{
+      "title" => "Shawshank Redemption",
+      "release_date" => "1994-10-14",
+      "characters" =>
+        [
+          %{"name" => "Andy Dufresne", "age" => "50"},
+          %{"name" => "Red", "age" => "60"}
+        ]
+    }
+
+    %Movie{}
+    |> cast(params, [:title, :release_date])
+    |> cast_assoc(:characters) # note the use of cast_assoc
+    |> Repo.insert()
