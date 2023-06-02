@@ -9,4 +9,9 @@ defmodule Friends.Group do
   end
 
 
+  # TO-DO: use embedded schema to add address to group and friend tables
+  # create changeset to validate length of group name
+
+
+
 end

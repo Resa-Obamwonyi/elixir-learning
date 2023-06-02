@@ -9,6 +9,9 @@ defmodule Friends.Person do
     belongs_to(:group, Friends.Group)
   end
 
+  # TO-DO: use embedded schema to add address to group and friend tables
+
+
   def changeset(person, params \\ %{}) do
     person
     |> cast(params, [:first_name, :last_name, :age])

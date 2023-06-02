@@ -10,5 +10,3 @@ defmodule Friends.Repo.Migrations.CreatePeople do
     end
   end
 end
-
-# used embedded schema to add address to group and friend tables
