@@ -7,6 +7,7 @@ defmodule Friends.Repo.Migrations.CreatePeople do
       add :last_name, :string
       add :age, :integer
       add :group_id, references(:groups)
+      add :address, :map
     end
   end
 end

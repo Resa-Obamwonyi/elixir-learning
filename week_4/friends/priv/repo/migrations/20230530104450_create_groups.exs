@@ -6,6 +6,7 @@ defmodule Friends.Repo.Migrations.CreateGroups do
       add :group_name, :string
       add :group_rank, :string
       add :is_rich_group, :boolean, null: false, default: true
+      add :address, :map
     end
   end
 end

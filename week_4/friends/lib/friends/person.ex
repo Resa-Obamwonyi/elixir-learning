@@ -7,10 +7,15 @@ defmodule Friends.Person do
     field(:last_name, :string)
     field(:age, :integer)
     belongs_to(:group, Friends.Group)
+
+    embeds_one :address, Address do
+      field :street_name, :string
+      field :street_number, :integer
+      field :city, :string
+      field :country, :string
+    end
+
   end
-
-  # TO-DO: use embedded schema to add address to group and friend tables
-
 
   def changeset(person, params \\ %{}) do
     person
