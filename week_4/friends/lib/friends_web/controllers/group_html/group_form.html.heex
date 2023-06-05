@@ -1,0 +1,12 @@
+<.simple_form :let={f} for={@changeset} action={@action}>
+  <.error :if={@changeset.action}>
+    Oops, something went wrong! Please check the errors below.
+  </.error>
+  <.input field={f[:group_name]} type="text" label="Name" />
+  <.input field={f[:group_rank]} type="text" label="Rank" />
+  <.input field={f[:is_rich_group]} type="text" label="Rich Group" />
+  <.input field={f[:address]} type="text" label="Address" />
+  <:actions>
+    <.button>Add Group</.button>
+  </:actions>
+</.simple_form>

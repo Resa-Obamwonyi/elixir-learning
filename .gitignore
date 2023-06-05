@@ -35,3 +35,8 @@ hello-*.tar
 npm-debug.log
 /assets/node_modules/
 
+/week_4/hello/deps/cowboy
+
+/week_4/hello/_build
+
+/week_4/hello/deps/floki

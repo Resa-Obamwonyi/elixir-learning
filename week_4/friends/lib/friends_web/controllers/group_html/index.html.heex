@@ -1,0 +1,26 @@
+<.header>
+  View All Groups
+  <:actions>
+    <.link href={~p"/groups/new"}>
+      <.button>Create Group</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="groups" rows={@groups} row_click={&JS.navigate(~p"/groups/#{&1}")}>
+  <:col :let={group} label="Group Name"><%= group.group_name %></:col>
+  <:col :let={group} label="Rank"><%= group.group_rank %></:col>
+  <:col :let={group} label="Rich Group"><%= group.is_rich_group %></:col>
+  <:col :let={group} label="Address"><%= group.address %></:col>
+  <:action :let={group}>
+    <div class="sr-only">
+      <.link navigate={~p"/groups/#{group}"}>Show</.link>
+    </div>
+    <.link navigate={~p"/groups/#{group}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={group}>
+    <.link href={~p"/groups/#{group}"} method="delete" data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>

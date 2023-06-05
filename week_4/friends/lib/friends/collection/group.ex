@@ -1,4 +1,4 @@
-defmodule Friends.Group do
+defmodule Friends.Collection.Group do
   use Ecto.Schema
   import Ecto.Changeset
 
@@ -7,7 +7,7 @@ defmodule Friends.Group do
     field :group_name, :string
     field :group_rank, Ecto.Enum, values: [:high, :middle, :low]
     field :is_rich_group, :boolean
-    has_many :people, Person
+    has_many :people, Friends.Person
 
     embeds_one :address, Address do
       field :street_name, :string
@@ -15,12 +15,12 @@ defmodule Friends.Group do
       field :city, :string
       field :country, :string
     end
-
   end
 
   # create changeset to validate length of group name
-  def changeset(group, _params \\ %{}) do
+  def changeset(group, attrs) do
     group
+    |> cast(attrs, [:group_name, :group_rank, :is_rich_group])
     |> validate_required([:group_name, :group_rank, :is_rich_group])
     |> validate_length(:group_name, min: 5)
   end
