@@ -1,0 +1,25 @@
+<.header>
+    Hello, <%= @person.first_name %>
+    <:subtitle>Here is your information.</:subtitle>
+    <:actions>
+      <.link href={~p"/friends/#{@person}/edit"}>
+        <.button>Edit Profile</.button>
+      </.link>
+    </:actions>
+  </.header>
+    
+  <.list>
+    <:item title="Firstname"><%= @person.first_name %></:item>
+    <:item title="Lastname"><%= @person.last_name %></:item>
+    <:item title="Age"><%= @person.age %></:item>
+
+    <:item title="Address">
+        <%= if @person.address do %>
+        <.address address={@person.address}></.address>
+        <% end %>
+    </:item>
+
+  </.list>
+  
+  <.back navigate={~p"/friends"}>See all Users</.back>
+  

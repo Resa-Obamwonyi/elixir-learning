@@ -1,6 +1,7 @@
-defmodule Friends.Person do
+defmodule Friends.People.Person do
   use Ecto.Schema
   import Ecto.Changeset
+  import Friends.Collection.Group
 
   schema "people" do
     field(:first_name, :string)
@@ -17,9 +18,17 @@ defmodule Friends.Person do
 
   end
 
+  # def address_changeset(address, attrs) do
+  #   address
+  #   |> cast(attrs, [:street_name, :street_number, :city, :country])
+  #   |> validate_required([:street_name, :city, :country])
+  # end
+
+
   def changeset(person, params \\ %{}) do
     person
     |> cast(params, [:first_name, :last_name, :age])
+    |> cast_embed(:address, with: &address_changeset/2)
     |> validate_required([:first_name, :last_name])
     |> validate_length(:first_name, min: 2)
     |> validate_length(:last_name, min: 3)

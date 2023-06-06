@@ -1,0 +1,37 @@
+<.header>
+  View All Friends
+  <:actions>
+    <.link href={~p"/friends/new"}>
+      <.button>Create Friend</.button>
+    </.link>
+
+    <.link href={~p"/groups"}>
+      <.button>View Groups</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="persons" rows={@persons} row_click={&JS.navigate(~p"/friends/#{&1}")}>
+  <:col :let={person} label="Firstname"><%= person.first_name %></:col>
+  <:col :let={person} label="Lastname"><%= person.last_name %></:col>
+  <:col :let={person} label="Age"><%= person.age %></:col>
+  <:col :let={person} label="Friendship Group"><%=  %></:col>
+
+  <:col :let={person} label="Address">
+    <%= if person.address do %>
+      <.address address={person.address}></.address>
+    <% end %>
+  </:col>
+
+  <:action :let={person}>
+    <div class="sr-only">
+      <.link navigate={~p"/friends/#{person}"}>Show</.link>
+    </div>
+    <.link navigate={~p"/friends/#{person}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={person}>
+    <.link href={~p"/friends/#{person}"} method="delete" data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>

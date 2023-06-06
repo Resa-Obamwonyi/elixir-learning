@@ -1,0 +1,25 @@
+<.header>
+    Welcome to <%= @group.group_name %>
+    <:subtitle>Have a look at this group, join if it interests you!.</:subtitle>
+    <:actions>
+      <.link href={~p"/groups/#{@group}/edit"}>
+        <.button>Edit Group</.button>
+      </.link>
+    </:actions>
+  </.header>
+    
+  <.list>
+    <:item title="Name"><%= @group.group_name %></:item>
+    <:item title="Rank"><%= @group.group_rank %></:item>
+    <:item title="Is Rich Group?"><%= @group.is_rich_group %></:item>
+
+    <:item title="Address">
+        <%= if @group.address do %>
+        <.address address={@group.address}></.address>
+        <% end %>
+    </:item>
+
+  </.list>
+  
+  <.back navigate={~p"/groups"}>Back to All Groups</.back>
+  

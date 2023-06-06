@@ -4,6 +4,11 @@
     <.link href={~p"/groups/new"}>
       <.button>Create Group</.button>
     </.link>
+
+    <.link href={~p"/friends"}>
+      <.button>View Users</.button>
+    </.link>
+
   </:actions>
 </.header>
 
@@ -11,7 +16,13 @@
   <:col :let={group} label="Group Name"><%= group.group_name %></:col>
   <:col :let={group} label="Rank"><%= group.group_rank %></:col>
   <:col :let={group} label="Rich Group"><%= group.is_rich_group %></:col>
-  <:col :let={group} label="Address"><%= group.address %></:col>
+
+  <:col :let={group} label="Address">
+    <%= if group.address do %>
+      <.address address={group.address}></.address>
+    <% end %>
+  </:col>
+
   <:action :let={group}>
     <div class="sr-only">
       <.link navigate={~p"/groups/#{group}"}>Show</.link>

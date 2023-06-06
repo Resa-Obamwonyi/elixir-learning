@@ -2,9 +2,10 @@
   <.error :if={@changeset.action}>
     Oops, something went wrong! Please check the errors below.
   </.error>
-  <.input field={f[:group_name]} type="text" label="Name" />
-  <.input field={f[:group_rank]} type="select" label="Rank" options={Friends.Collection.Group.rank_options()}/>
-  <.input field={f[:is_rich_group]} type="checkbox" label="Rich Group"/>
+  <.input field={f[:first_name]} type="text" label="Firstname" />
+  <.input field={f[:last_name]} type="text" label="Lastname" />
+  <.input field={f[:age]} type="number" label="Age" />
+  
 
   <%= for address_form <- inputs_for(f, :address) do %>
     <%= hidden_inputs_for(address_form) %>
@@ -15,6 +16,6 @@
   <% end %>
 
   <:actions>
-    <.button>Save Group</.button>
+    <.button>Save User</.button>
   </:actions>
 </.simple_form>

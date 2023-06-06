@@ -1,0 +1,9 @@
+<.header>
+    Edit User Information <%= @person.id %>
+    <:subtitle>Use this form to edit a user's information.</:subtitle>
+  </.header>
+  
+  <.person_form changeset={@changeset} action={~p"/friends/#{@person}"} />
+  
+  <.back navigate={~p"/friends"}>See all Users</.back>
+  
