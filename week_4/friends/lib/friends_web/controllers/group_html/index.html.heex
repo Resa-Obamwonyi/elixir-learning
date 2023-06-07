@@ -12,6 +12,15 @@
   </:actions>
 </.header>
 
+
+<.simple_form :let={f} for={} action={~p"/groups"} method="get">
+  <.input field={f[:search]} type="text" placeholder="Search..." />
+  <:actions>
+    <.button>Search</.button>
+  </:actions>
+</.simple_form>
+
+
 <.table id="groups" rows={@groups} row_click={&JS.navigate(~p"/groups/#{&1}")}>
   <:col :let={group} label="Group Name"><%= group.group_name %></:col>
   <:col :let={group} label="Rank"><%= group.group_rank %></:col>

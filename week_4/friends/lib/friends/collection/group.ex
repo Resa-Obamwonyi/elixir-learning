@@ -1,6 +1,7 @@
 defmodule Friends.Collection.Group do
   use Ecto.Schema
   import Ecto.Changeset
+  import Ecto.Query, only: [from: 2]
 
   # a group has many friends and a friend belongs to a group
   schema "groups" do
@@ -42,6 +43,14 @@ defmodule Friends.Collection.Group do
     |> cast_embed(:address, with: &address_changeset/2)
     |> validate_required([:group_name, :group_rank, :is_rich_group])
     |> validate_length(:group_name, min: 5)
+  end
+
+
+  def search(query, term) do
+    wildcard_search = "%#{term}%"
+
+    from group in query,
+    where: ilike(group.group_name, ^wildcard_search)
   end
 
 end

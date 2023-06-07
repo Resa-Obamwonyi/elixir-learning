@@ -5,13 +5,16 @@ defmodule Friends.Collection do
   alias Friends.Collection.Group
 
   # get all groups
-  def list_groups() do
-    Repo.all(Group)
+  def list_groups(params) do
+    search_term = get_in(params, ["search"])
+
+    Group
+    |> Group.search(search_term)
+    |> Repo.all()
   end
 
   # get group by id
   def get_group!(id), do: Repo.get!(Group, id)
-
 
   # create a group
   def create_group(attrs \\ %{}) do
@@ -34,4 +37,11 @@ defmodule Friends.Collection do
     Repo.delete(group)
   end
 
+  def search(params) do
+    search_term = get_in(params, ["search"])
+
+    Group
+    |> Group.search(search_term)
+    |> Repo.all()
+  end
 end

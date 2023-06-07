@@ -20,6 +20,7 @@ defmodule FriendsWeb.Router do
     get "/", PageController, :home
     resources "/groups", GroupController
     resources "/friends", FriendController
+
   end
 
   # Other scopes may use custom stacks.

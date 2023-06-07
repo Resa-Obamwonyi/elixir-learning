@@ -4,8 +4,8 @@ defmodule FriendsWeb.GroupController do
   alias Friends.Collection
   alias Friends.Collection.Group
 
-  def index(conn, _params) do
-    groups = Collection.list_groups()
+  def index(conn, params) do
+    groups = Collection.list_groups(params)
     render(conn, :index, groups: groups)
   end
 
@@ -66,5 +66,12 @@ defmodule FriendsWeb.GroupController do
     conn
     |> put_flash(:info, "Group deleted successfully.")
     |> redirect(to: ~p"/groups")
+  end
+
+  # Implement search by name, rank and status
+  def search(conn, params) do
+    IO.inspect(params)
+      results = Collection.search(params)
+      render(conn, :index, groups: results)
   end
 end
