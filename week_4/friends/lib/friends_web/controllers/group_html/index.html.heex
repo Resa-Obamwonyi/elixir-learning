@@ -13,8 +13,11 @@
 </.header>
 
 
-<.simple_form :let={f} for={} action={~p"/groups"} method="get">
+<.simple_form :let={f} for={@changeset} action={~p"/groups"} method="get">
+  <%= inspect(@changeset) %>
+  <.input field={f[:page]} type="hidden" value="1"/>
   <.input field={f[:search]} type="text" placeholder="Search..." />
+  <.input field={f[:rank]} type="select" label="Rank" options={Friends.Collection.Group.rank_options()}/>
   <:actions>
     <.button>Search</.button>
   </:actions>
@@ -44,3 +47,13 @@
     </.link>
   </:action>
 </.table>
+
+
+<.simple_form :let={f} for={@changeset} action={~p"/groups"} method="get">
+  <.input field={f[:search]} type="hidden" />
+  <.input field={f[:rank]} type="hidden"/>
+
+  Pagination
+  Limit: 10
+  Page: <%= Ecto.Changeset.get_field(@changeset, :page) %>
+</.simple_form>

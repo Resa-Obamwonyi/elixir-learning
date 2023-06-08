@@ -5,11 +5,18 @@ defmodule Friends.Collection do
   alias Friends.Collection.Group
 
   # get all groups
-  def list_groups(params) do
-    search_term = get_in(params, ["search"])
+  def list_groups(group_filter) do
+    IO.inspect(group_filter)
+    # search_term = get_in(group_filter, [:search]) || ""
+    # # same to:
+    # # search_term = Map.get(group_filter, "search", "")
+    # rank_term = get_in(group_filter, [:rank]) || ""
 
     Group
-    |> Group.search(search_term)
+    |> Group.search(group_filter.search)
+    |> Group.rank(group_filter.rank)
+    |> Group.sort(group_filter.sort)
+    |> Group.pagination(group_filter.page)
     |> Repo.all()
   end
 
