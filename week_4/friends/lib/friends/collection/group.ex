@@ -50,7 +50,8 @@ defmodule Friends.Collection.Group do
     wildcard_search = "%#{term}%"
 
     from group in query,
-    where: ilike(group.group_name, ^wildcard_search)
+    where: ilike(group.group_name, ^wildcard_search),
+    or_where: ilike(group.group_rank, ^wildcard_search)
   end
 
 end
