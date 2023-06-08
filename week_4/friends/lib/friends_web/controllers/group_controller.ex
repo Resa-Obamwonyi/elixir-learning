@@ -5,8 +5,10 @@ defmodule FriendsWeb.GroupController do
   alias Friends.Collection.Group
 
   def index(conn, params) do
-    groups = Collection.list_groups(params)
-    render(conn, :index, groups: groups)
+    {changeset, group_filter} = FriendsWeb.Inputs.GroupFilter.changeset(params["group_filter"])
+
+    groups = Collection.list_groups(group_filter)
+    render(conn, :index, groups: groups, changeset: changeset)
   end
 
   def new(conn, _params) do
@@ -71,7 +73,7 @@ defmodule FriendsWeb.GroupController do
   # Implement search by name, rank and status
   def search(conn, params) do
     IO.inspect(params, label: "PARAMS \n")
-      results = Collection.search(params)
-      render(conn, :index, groups: results)
+    results = Collection.search(params)
+    render(conn, :index, groups: results)
   end
 end
