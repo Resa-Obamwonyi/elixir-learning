@@ -3,6 +3,7 @@
   <:subtitle>Become a Friend, Be part of a community</:subtitle>
 </.header>
 
-<.person_form changeset={@changeset} action={~p"/friends"} />
+<.person_form changeset={@changeset} action={~p"/friends"} groups={@groups}/>
+
 
 <.back navigate={~p"/friends"}>See all Users</.back>

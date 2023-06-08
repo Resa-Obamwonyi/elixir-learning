@@ -21,6 +21,7 @@ defmodule Friends.Collection.Group do
   end
 
   @rank_options [
+    {nil, nil},
     {"High", "high"},
     {"Middle", "middle"},
     {"Low", "low"}

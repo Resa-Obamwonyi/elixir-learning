@@ -14,6 +14,7 @@ defmodule Friends.People do
 
   # create a friend
   def create_friend(attrs \\ %{}) do
+    IO.inspect(attrs)
     %Person{}
     |> Person.changeset(attrs)
     |> Repo.insert()
@@ -34,3 +35,5 @@ defmodule Friends.People do
   end
 
 end
+
+#Friends.People.create_friend(%{first_name: "Philipp",last_name: "Waldmann",age: 35,group_id: 99999, address: %{street_name: "Milch",street_number: 10, city: "Vienna", country: "Austria"}})

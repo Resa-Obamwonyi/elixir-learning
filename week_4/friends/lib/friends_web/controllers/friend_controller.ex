@@ -3,6 +3,10 @@ defmodule FriendsWeb.FriendController do
 
   alias Friends.People
   alias Friends.People.Person
+  alias Friends.Collection.Group
+  alias Friends.Repo
+
+  import Ecto.Query
 
   def index(conn, _params) do
     persons = People.list_friends()
@@ -11,11 +15,13 @@ defmodule FriendsWeb.FriendController do
 
   def new(conn, _params) do
     changeset = People.change_friend(%Person{})
-    render(conn, :new, changeset: changeset)
+    groups = Repo.all(from(g in Group, select: {g.group_name, g.id}))
+    render(conn, :new, changeset: changeset, groups: groups)
   end
 
   def create(conn, %{"person" => person_params}) do
     IO.inspect(person_params)
+    groups = Repo.all(from(g in Group, select: {g.group_name, g.id}))
 
     case People.create_friend(person_params) do
       {:ok, person} ->
@@ -24,7 +30,7 @@ defmodule FriendsWeb.FriendController do
         |> redirect(to: ~p"/friends/#{person}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, :new, changeset: changeset)
+        render(conn, :new, changeset: changeset, groups: groups)
     end
   end
 
@@ -34,16 +40,18 @@ defmodule FriendsWeb.FriendController do
   end
 
   def edit(conn, %{"id" => id}) do
+    groups = Repo.all(from(g in Group, select: {g.group_name, g.id}))
     # get person
     person = People.get_friend!(id)
     # validate
     changeset = People.change_friend(person)
     # render edit page template
-    render(conn, :edit, person: person, changeset: changeset)
+    render(conn, :edit, person: person, changeset: changeset, groups: groups)
   end
 
   def update(conn, %{"id" => id, "person" => person_params}) do
     IO.inspect(person_params)
+    groups = Repo.all(from(g in Group, select: {g.group_name, g.id}))
 
     # get person
     person = People.get_friend!(id)
@@ -55,7 +63,7 @@ defmodule FriendsWeb.FriendController do
         |> redirect(to: ~p"/friends/#{person}")
 
       {:error, %Ecto.Changeset{} = changeset} ->
-        render(conn, :new, changeset: changeset)
+        render(conn, :new, changeset: changeset, groups: groups)
     end
   end
 

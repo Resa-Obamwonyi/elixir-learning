@@ -5,6 +5,7 @@
   <.input field={f[:first_name]} type="text" label="Firstname" />
   <.input field={f[:last_name]} type="text" label="Lastname" />
   <.input field={f[:age]} type="number" label="Age" />
+  <.input field={f[:group_id]} type="select" label="Friend Group" options={@groups}/>
   
 
   <%= for address_form <- inputs_for(f, :address) do %>

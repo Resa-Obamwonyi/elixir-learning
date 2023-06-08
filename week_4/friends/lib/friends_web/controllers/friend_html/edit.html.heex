@@ -3,7 +3,7 @@
     <:subtitle>Use this form to edit a user's information.</:subtitle>
   </.header>
   
-  <.person_form changeset={@changeset} action={~p"/friends/#{@person}"} />
+  <.person_form changeset={@changeset} action={~p"/friends/#{@person}"} groups={@groups}/>
   
   <.back navigate={~p"/friends"}>See all Users</.back>
   

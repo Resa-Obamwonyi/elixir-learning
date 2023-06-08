@@ -13,6 +13,12 @@
     <:item title="Lastname"><%= @person.last_name %></:item>
     <:item title="Age"><%= @person.age %></:item>
 
+    <:item title="Friendship Group">
+      <%= if @person.group_id do %>
+        <%= Friends.Collection.get_group!(@person.group_id).group_name %>
+      <% end %>  
+    </:item>
+
     <:item title="Address">
         <%= if @person.address do %>
         <.address address={@person.address}></.address>
