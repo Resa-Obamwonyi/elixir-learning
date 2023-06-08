@@ -70,7 +70,7 @@ defmodule FriendsWeb.GroupController do
 
   # Implement search by name, rank and status
   def search(conn, params) do
-    IO.inspect(params)
+    IO.inspect(params, label: "PARAMS \n")
       results = Collection.search(params)
       render(conn, :index, groups: results)
   end

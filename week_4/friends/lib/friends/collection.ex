@@ -38,6 +38,7 @@ defmodule Friends.Collection do
   end
 
   def search(params) do
+    IO.inspect(params, label: "PARAMS \n")
     search_term = get_in(params, ["search"])
 
     Group
