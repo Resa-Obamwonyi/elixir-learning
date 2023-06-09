@@ -18,7 +18,7 @@
 
   <:col :let={person} label="Friendship Group">
     <%= if person.group_id do %>
-      <%= Friends.Collection.get_group!(person.group_id).group_name %>
+    <%= inspect person.group.group_name %>
     <% end %>  
   </:col>
 

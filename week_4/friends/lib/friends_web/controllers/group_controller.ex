@@ -8,7 +8,8 @@ defmodule FriendsWeb.GroupController do
     {changeset, group_filter} = FriendsWeb.Inputs.GroupFilter.changeset(params["group_filter"])
 
     groups = Collection.list_groups(group_filter)
-    render(conn, :index, groups: groups, changeset: changeset)
+    total = Collection.count_groups(group_filter)
+    render(conn, :index, groups: groups, changeset: changeset, total: total)
   end
 
   def new(conn, _params) do

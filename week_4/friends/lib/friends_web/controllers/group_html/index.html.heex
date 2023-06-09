@@ -50,10 +50,13 @@
 
 
 <.simple_form :let={f} for={@changeset} action={~p"/groups"} method="get">
+    Pagination
+    Limit: 10
+    Page: <%= Ecto.Changeset.get_field(@changeset, :page) %>/<%= ceil(@total / 10) %>
+  <.input field={f[:page]} type="hidden" value={Ecto.Changeset.get_field(@changeset, :page)+1}/>
   <.input field={f[:search]} type="hidden" />
   <.input field={f[:rank]} type="hidden"/>
-
-  Pagination
-  Limit: 10
-  Page: <%= Ecto.Changeset.get_field(@changeset, :page) %>
+  <.button>
+    Next
+  </.button>
 </.simple_form>

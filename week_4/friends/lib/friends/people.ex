@@ -6,15 +6,17 @@ defmodule Friends.People do
 
   # get all friends
   def list_friends do
-    Repo.all(Person)
+    # Repo.all(Person, preload: [:group])
+    Repo.all(from p in Person, preload: [:group])
   end
 
   # get friend by id
-  def get_friend!(id), do: Repo.get!(Person, id)
+  def get_friend!(id), do: Repo.get!(Person, id) |> Repo.preload(:group)
 
   # create a friend
   def create_friend(attrs \\ %{}) do
     IO.inspect(attrs)
+
     %Person{}
     |> Person.changeset(attrs)
     |> Repo.insert()
@@ -33,7 +35,6 @@ defmodule Friends.People do
   def delete_friend(%Person{} = friend) do
     Repo.delete(friend)
   end
-
 end
 
-#Friends.People.create_friend(%{first_name: "Philipp",last_name: "Waldmann",age: 35,group_id: 99999, address: %{street_name: "Milch",street_number: 10, city: "Vienna", country: "Austria"}})
+# Friends.People.create_friend(%{first_name: "Philipp",last_name: "Waldmann",age: 35, group_id: 90, address: %{street_name: "Milch",street_number: 10, city: "Vienna", country: "Austria"}})

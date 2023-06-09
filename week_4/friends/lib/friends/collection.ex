@@ -20,6 +20,13 @@ defmodule Friends.Collection do
     |> Repo.all()
   end
 
+  def count_groups(group_filter) do
+    Group
+    |> Group.search(group_filter.search)
+    |> Group.rank(group_filter.rank)
+    |> Repo.aggregate(:count)
+  end
+
   # get group by id
   def get_group!(id), do: Repo.get!(Group, id)
 
