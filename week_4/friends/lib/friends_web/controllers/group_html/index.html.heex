@@ -31,7 +31,7 @@
 
   <:col :let={group} label="Address">
     <%= if group.address do %>
-      <.address address={group.address}></.address>
+      <.address address={group.address} />
     <% end %>
   </:col>
 
@@ -53,10 +53,25 @@
     Pagination
     Limit: 10
     Page: <%= Ecto.Changeset.get_field(@changeset, :page) %>/<%= ceil(@total / 10) %>
-  <.input field={f[:page]} type="hidden" value={Ecto.Changeset.get_field(@changeset, :page)+1}/>
   <.input field={f[:search]} type="hidden" />
   <.input field={f[:rank]} type="hidden"/>
-  <.button>
-    Next
-  </.button>
+  
+  <%= if (ceil(@total / 10) - Ecto.Changeset.get_field(@changeset, :page)) >= 1  do %>
+    <.input field={f[:page]} type="hidden" value={Ecto.Changeset.get_field(@changeset, :page)+1}/>
+      <.button>
+        Next
+      </.button>
+  <% end %>
+
+  <%= if (ceil(@total / 10) - Ecto.Changeset.get_field(@changeset, :page)) < 1  && ceil(@total / 10) > 1 do %>
+    <.input field={f[:page]} type="hidden" value={Ecto.Changeset.get_field(@changeset, :page)-1}/>
+      <.button>
+        Back
+      </.button>
+  <% end %>
+
+  <%= if ceil(@total / 10) <= 1 do %>
+    <.input field={f[:page]} type="hidden" value={Ecto.Changeset.get_field(@changeset, :page)}/>
+  <% end %>
+
 </.simple_form>
