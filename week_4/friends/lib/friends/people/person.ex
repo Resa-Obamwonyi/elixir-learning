@@ -21,7 +21,7 @@ defmodule Friends.People.Person do
     person
     |> cast(params, [:first_name, :last_name, :age, :group_id])
     |> cast_embed(:address, with: &address_changeset/2)
-    # |> cast_assoc(:group)
+    |> assoc_constraint(:group, message: "This Group ID does not exist!!")
     |> validate_required([:first_name, :last_name])
     |> validate_length(:first_name, min: 2)
     |> validate_length(:last_name, min: 3)
